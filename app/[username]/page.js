@@ -27,17 +27,24 @@ const Username = ({ params }) => {
                         {/* Show list of all the supporters as a leaderboard */}
                         <h2 className="text-2xl font-bold my-5">Supporters</h2>
                         <ul className="mx-5 text-lg">
-                            <li className="my-2 flex gap-2">
-                                <img src="avatar.gif" alt="user avatar" />
-                                Shubham donated $30 with a message
-                                </li>
-                            <li className="my-2">Shubham donated $30 with a message</li>
-                            <li className="my-2">Shubham donated $30 with a message</li>
-                            <li className="my-2">Shubham donated $30 with a message</li>
-                            <li className="my-2">Shubham donated $30 with a message</li>
-                            <li className="my-2">Shubham donated $30 with a message</li>
-                            <li className="my-2">Shubham donated $30 with a message</li>
-                            <li className="my-2">Shubham donated $30 with a message</li>
+                            <li className="my-4 flex gap-2 items-center">
+                                <img width={33} src="avatar.gif" alt="user avatar" />
+                                <span>
+                                Shubham donated <span className='font-bold'>$30</span> with a message "I support you bro, Lots of 💖"
+                                </span>
+                            </li>
+                            <li className="my-4 flex gap-2 items-center">
+                                <img width={33} src="avatar.gif" alt="user avatar" />
+                                <span>
+                                Shubham donated <span className='font-bold'>$30</span> with a message "I support you bro, Lots of 💖"
+                                </span>
+                            </li>
+                            <li className="my-4 flex gap-2 items-center">
+                                <img width={33} src="avatar.gif" alt="user avatar" />
+                                <span>
+                                Shubham donated <span className='font-bold'>$30</span> with a message "I support you bro, Lots of 💖"
+                                </span>
+                            </li>
                         </ul>
                     </div>
 
