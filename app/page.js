@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <>
       <div className="flex justify-center flex-col gap-4 items-center text-white h-[44vh]">
-        <div className="font-bold text-5xl gap-2 flex justify-center items-center">Fund me to resolve my issue <span><Image src="/spinCoin.gif" width={88} height={88} unoptimized alt="" /></span></div>
+        <div className="font-bold text-5xl gap-2 flex justify-center items-center">Fund me to resolve my issue <span><Image className="invertImg" src="/spinCoin.gif" width={88} height={88} unoptimized alt="" /></span></div>
         <p>A crowdfunding platform for People. Get funded by general public. Start Now!</p>
         <div>
           {/* button ui is taken from flowbite */}

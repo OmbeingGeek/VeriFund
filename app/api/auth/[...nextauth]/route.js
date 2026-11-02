@@ -29,6 +29,15 @@ export const authoptions = NextAuth({
     //   from: "NextAuth.js <no-reply@example.com>",
     // }),
   ],
+  callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      if(account.provider == "github") {
+        //Connect to the database
+        const client = await mongoose.connect()
+        //Check if the user already exists in the database
+      }
+    }
+  }
 });
 
 export { authoptions as GET, authoptions as POST };
