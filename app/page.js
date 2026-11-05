@@ -4,8 +4,8 @@ import Link from "next/link";
 export default function Home() {
   return (
     <>
-      <div className="flex justify-center flex-col gap-4 items-center text-white h-[44vh]">
-        <div className="font-bold text-5xl gap-2 flex justify-center items-center">Fund me to resolve my issue <span><Image className="invertImg" src="/spinCoin.gif" width={88} height={88} unoptimized alt="" /></span></div>
+      <div className="flex justify-center flex-col gap-4 items-center text-white h-[44vh] px-5 md:px-0 text-xs md:text-base">
+        <div className="font-bold text-3xl gap:6 md:gap-20 md:text-5xl flex justify-center items-center">Fund me to resolve my issue <span><Image className="invertImg" src="/spinCoin.gif" width={88} height={88} unoptimized alt="" /></span></div>
         <p>A crowdfunding platform for People. Get funded by general public. Start Now!</p>
         <div>
           <Link href={"/login"}>
@@ -21,7 +21,7 @@ export default function Home() {
       </div>
       <div className="bg-white h-1 opacity-15"></div>
 
-      <div className="text-white container mx-auto pb-32 pt-14">
+      <div className="text-white container mx-auto pb-32 pt-14 px-10">
         <h2 className="text-3xl font-bold text-center mb-14">
           Your Fans can buy you a Chai
         </h2>
@@ -36,7 +36,7 @@ export default function Home() {
               src="/man.gif"
               alt=""
             />
-            <p className="font-bold">Fans want to help</p>
+            <p className="font-bold text-center">Fans want to help</p>
             <p className="text-center">Your fans are available to help you</p>
           </div>
 
@@ -49,7 +49,7 @@ export default function Home() {
               src="/coin.gif"
               alt=""
             />
-            <p className="font-bold">Fans want to help</p>
+            <p className="font-bold text-center">Fans want to help</p>
             <p className="text-center">Your fans are available to help you</p>
           </div>
 
@@ -62,7 +62,7 @@ export default function Home() {
               src="/group.gif"
               alt=""
             />
-            <p className="font-bold">Fans want to help</p>
+            <p className="font-bold text-center">Fans want to help</p>
             <p className="text-center">Your fans are available to help you</p>
           </div>
         </div>
@@ -74,7 +74,7 @@ export default function Home() {
         <h2 className="text-3xl font-bold text-center mb-14">
           Learn More About Us
         </h2>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/voF1plqqZJA?si=nUD7O31MQsLY8XMg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <iframe width="560" height="315" md:className="w-full h-full" src="https://www.youtube.com/embed/voF1plqqZJA?si=nUD7O31MQsLY8XMg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
   
       </div>
     </>
