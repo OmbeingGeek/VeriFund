@@ -8,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Bounce } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+import { notFound } from 'next/navigation';
 
 const PaymentPage = ({ username }) => {
     // const { data: session } = useSession()
@@ -147,11 +148,11 @@ const PaymentPage = ({ username }) => {
                 </div>
 
                 <div className="text-slate-400">
-                    Creating Animated art for VTT's
+                    Let's Help {username} get a chai!
                 </div>
 
                 <div className="text-slate-400">
-                    9,719 members . 82 posts . $15,450/release
+                    {payments.length} Payments . ₹{payments.reduce((a,b) => a+b.amount, 0)} raised
                 </div>
 
                 <div className="payment flex gap-3 w-[80%] mt-11">
