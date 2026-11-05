@@ -7,3 +7,7 @@ const DashboardPage = () => {
 }
 
 export default DashboardPage
+
+export const metadata = {
+    title: "Dashboard - VeriFund",
+}

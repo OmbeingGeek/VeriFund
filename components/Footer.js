@@ -1,10 +1,11 @@
 import React from 'react'
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
   return (
-    <footer className='bg-blue-900 text-white flex justify-center items-center px-4 h-16'>
+    <footer className='bg-gray-900 text-white flex justify-center items-center px-4 h-16'>
         <p className='text-center'>
-            Copyright &copy; VeriFUND - All rights reserved!
+            Copyright &copy; {currentYear} VeriFUND - All rights reserved!
         </p>
     </footer>
   )
