@@ -32,7 +32,7 @@ const Navbar = () => {
           </button>
 
           {/* <!-- Dropdown menu --> */}
-          <div id="dropdown" className={`z-10 ${showdropdown?"":"hidden"} absolute left-[125px] bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44`}>
+          <div id="dropdown" className={`z-10 ${showdropdown?"":"hidden"} absolute left-31.25 bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44`}>
             <ul className="p-2 text-sm text-body font-medium" aria-labelledby="dropdownDefaultButton">
               <li>
                 <Link href="/dashboard" className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Dashboard</Link>
@@ -48,10 +48,10 @@ const Navbar = () => {
         }
         
         {session &&
-          <button className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-4 py-2.5 text-center leading-5 m-5" onClick={() => { signOut() }}>Logout</button>}
+          <button className="text-white bg-linear-to-br from-purple-600 to-blue-500 hover:bg-linear-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-4 py-2.5 text-center leading-5 m-5" onClick={() => { signOut() }}>Logout</button>}
 
         {!session && <Link href={"/login"}>
-          <button className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-4 py-2.5 text-center leading-5 m-5">Login</button>
+          <button className="text-white bg-linear-to-br from-purple-600 to-blue-500 hover:bg-linear-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-4 py-2.5 text-center leading-5 m-5">Login</button>
         </Link>}
       </div>
 
