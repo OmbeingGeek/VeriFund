@@ -9,9 +9,13 @@ import User from "@/models/User"
 export const initiate = async (amount, to_username, paymentform) => {
     await connectDb()
 
+    //fetch the secret of the user who is getting the payment
+    let user = await User.findOne({username: to_username})
+    const secret = user.razorpaysecret
+
     var instance = new Razorpay({
-        key_id: process.env.NEXT_PUBLIC_KEY_ID,
-        key_secret: process.env.KEY_SECRET
+        key_id: user.razorpayid,
+        key_secret: secret
     })
 
     let options = {
@@ -22,7 +26,7 @@ export const initiate = async (amount, to_username, paymentform) => {
     let x = await instance.orders.create(options)
 
     //create a payment object which shows a pending payments in the database
-    await Payment.create({oid: x.id, amount: amount, to_user: to_username, name: paymentform.name, message: paymentfrom.message})
+    await Payment.create({oid: x.id, amount: amount/100, to_user: to_username, name: paymentform.name, message: paymentfrom.message})
 
     return x
 
@@ -39,7 +43,7 @@ export const fetchuser = async (username) => {
 export const fetchpayments = async (username) => {
     await connectDB()
     //find all payments sorted by decreasing order of amount
-    let p = await Payment.find({to_user: username}).sort({amount: -1}).lean()
+    let p = await Payment.find({to_user: username, done: true}).sort({amount: -1}).lean()
     return p
     
 }

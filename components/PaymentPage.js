@@ -1,16 +1,25 @@
 "use client"
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Script from 'next/script';
 import { fetchuser, fetchpayments, initiate } from '@/actions/useractions';
 import { useSession } from 'next-auth/react';
+import { useSearchParams } from 'next/navigation';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Bounce } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 
-const PaymentPage = ({username}) => {
+const PaymentPage = ({ username }) => {
+    // const { data: session } = useSession()
+
     const [Paymentform, setPaymentform] = useState({})
     const [currentUser, setcurrentUser] = useState({})
     const [Payments, setPayments] = useState([])
+    const searchParams = useSearchParams()
+    const router = useRouter()
 
     const handleChange = (e) => {
-        setPaymentform({...paymentform, [e.target.name]: e.target.value})
+        setPaymentform({ ...paymentform, [e.target.name]: e.target.value })
     }
 
     const getData = async () => {
@@ -21,17 +30,35 @@ const PaymentPage = ({username}) => {
     }
 
     useEffect(() => {
-      getData()
-    
+        getData()
+
     }, [])
-    
+
+    useEffect(() => {
+        if (searchParams.get("paymentdone") == "true") {
+            toast('Thanks for your donation!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+            });
+        }
+        router.push(`/${username}`)
+    }, [])
+
+
 
     const pay = async (amount) => {
         //Get the order id
         let a = await initiate(amount, username, paymentform)
         let orderid = a.id
         var options = {
-            "key": process.env.NEXT_PUBLIC_KEY_ID, // Enter the Key ID generated from the Dashboard
+            "key": currentUser.razorpayid, // Enter the Key ID generated from the Dashboard
             "amount": amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
             "currency": "INR",
             "name": "Get Me A Chai", //your business name
@@ -59,6 +86,22 @@ const PaymentPage = ({username}) => {
 
     return (
         <>
+
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
+            {/* Same as */}
+            <ToastContainer />
+
             <Script src="https://checkout.razorpay.com/v1/checkout.js"></Script>
             <Script>
                 {`
@@ -93,9 +136,9 @@ const PaymentPage = ({username}) => {
             </Script>
 
             <div className='cover w-full bg-red-50 relative'>
-                <img className="object-cover w-full h-[350]" src="https://c10.patreonusercontent.com/4/patreon-media/p/campaign/4842667/452146dcfeb04f38853368f554aadde1/eyJ3IjoxOTIwLCJ3ZSI6MX0%3D/15.gif?token-time=1712188800&token-hash=Yu2izk29wcmpgmXNNW0zpk5W_gwh0Ezu_2oO1XGDLpY%3D" alt='' />
-                <div className='absolute -bottom-20 right-[46%] border-white border-2 rounded-full'>
-                    <img width={150} height={150} className='rounded-full' src="https://i1.natgeo.com/n/548467d8-cf51-4551-9f58-68187a2dc45e/NationalGeographic_2572187_square.jpg" alt="" />
+                <img className="object-cover w-full h-[350]" src={currentUser.coverpic} alt='' />
+                <div className='absolute -bottom-20 right-[46%] border-white overflow-hidden border-2 rounded-full size-32'>
+                    <img width={128} height={128} className='rounded-full object-cover size-32' src={currentUser.profilepic} alt="" />
                 </div>
             </div>
             <div className="info flex justify-center items-center my-24 flex-col gap-2 mb-32">
@@ -116,13 +159,15 @@ const PaymentPage = ({username}) => {
                         {/* Show list of all the supporters as a leaderboard */}
                         <h2 className="text-2xl font-bold my-5">Supporters</h2>
                         <ul className="mx-5 text-lg">
-                            { payments.map((p,i) =>{
-                            return <li key={i} className="my-4 flex gap-2 items-center">
-                                <img width={33} src="avatar.gif" alt="user avatar" />
-                                <span>
-                                {p.name} donated <span className='font-bold'>₹{p.amount}</span> with a message "{p.message}"
-                                </span>
-                            </li>})}
+                            {payments.length == 0 && <li>No payments yet</li>}
+                            {payments.map((p, i) => {
+                                return <li key={i} className="my-4 flex gap-2 items-center">
+                                    <img width={33} src="avatar.gif" alt="user avatar" />
+                                    <span>
+                                        {p.name} donated <span className='font-bold'>₹{p.amount}</span> with a message "{p.message}"
+                                    </span>
+                                </li>
+                            })}
                         </ul>
                     </div>
 
@@ -130,19 +175,19 @@ const PaymentPage = ({username}) => {
                         <h2 className="text-2xl font-bold my-5">Make a Payment</h2>
                         <div className="flex gap-2 flex-col">
 
-                        <input onChange={handleChange} value={paymentform.name} name='name' type="text" className="w-full p-3 rounded-lg bg-slate-800" placeholder="Enter Name"/>
-                        <input onChange={handleChange} value={paymentform.message} name='message' type="text" className="w-full p-3 rounded-lg bg-slate-800" placeholder="Enter Message"/>
+                            <input onChange={handleChange} value={paymentform.name} name='name' type="text" className="w-full p-3 rounded-lg bg-slate-800" placeholder="Enter Name" />
+                            <input onChange={handleChange} value={paymentform.message} name='message' type="text" className="w-full p-3 rounded-lg bg-slate-800" placeholder="Enter Message" />
 
-                        <input onChange={handleChange} value={Number.parseInt(paymentform.amount)*100} name='amount' type="text" className="w-full p-3 rounded-lg bg-slate-800" placeholder="Enter Amount"/>
-                        <button onClick={()=> pay(paymentfrom.amount)} type="button" className="text-white bg-gradient-to-br from-purple-900 to-blue-900 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-base text-sm px-4 py-2.5 text-center leading-5">Pay</button>
+                            <input onChange={handleChange} value={Number.parseInt(paymentform.amount) * 100} name='amount' type="text" className="w-full p-3 rounded-lg bg-slate-800" placeholder="Enter Amount" />
+                            <button onClick={() => pay(paymentfrom.amount)} type="button" className="text-white bg-gradient-to-br from-purple-900 to-blue-900 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-base text-sm px-4 py-2.5 text-center leading-5 disabled:bg-slate-600 disabled:from-purple-100" disabled={paymentform.name?.length < 3 || paymentform.message?.length < 4}>Pay</button>
 
                         </div>
 
                         {/* Or choose from these amounts */}
                         <div className="flex gap-2 mt-5">
-                            <button className="bg-slate-800 p-3 rounded-lg" onClick={()=> pay(1000)}>Pay ₹10</button>
-                            <button className="bg-slate-800 p-3 rounded-lg" onClick={()=> pay(2000)}>Pay ₹20</button>
-                            <button className="bg-slate-800 p-3 rounded-lg" onClick={()=> pay(3000)}>Pay ₹30</button>
+                            <button className="bg-slate-800 p-3 rounded-lg" onClick={() => pay(1000)}>Pay ₹10</button>
+                            <button className="bg-slate-800 p-3 rounded-lg" onClick={() => pay(2000)}>Pay ₹20</button>
+                            <button className="bg-slate-800 p-3 rounded-lg" onClick={() => pay(3000)}>Pay ₹30</button>
                         </div>
                     </div>
                 </div>
